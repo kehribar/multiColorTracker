@@ -7,6 +7,8 @@ Idea of classifiyng upto 32 different objects using logical AND operations, come
 "Fast and Cheap Color Image Segmentation for Interactive Robots"
 http://www.cs.cmu.edu/~mmv/papers/wirevision00.pdf
 
+Color tracking is implemented in YUV space.
+
 Someday in future, I hope I will implement this algorithm on FPGA based embedded environment. 
 
 ## Usage
