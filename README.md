@@ -11,7 +11,7 @@ Someday in future, I hope I will implement this algorithm on FPGA based embedded
 
 ## Usage
 
-I tested this program with OpenCV 2.4 and Ubuntu 12.10 based system. You should be easily compile the program by 'make main' if you have OpenCV installed.
+I tested this program with OpenCV 2.4 and Ubuntu 12.10 based system. You should easily compile the program by 'make main' if you have OpenCV installed.
 
 After you compiled the program, you can select an object color by clicking on the image.
 
