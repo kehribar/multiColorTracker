@@ -20,7 +20,7 @@ using namespace std;
 /******************************************************************************
 / Macro definitions
 /*****************************************************************************/
-#define COLOR_RESOLUTION 8
+#define COLOR_RESOLUTION 8 /* 8 bits -> 256 colors ... */
 #define setBit(register,bit) (register |= (1<<bit))
 #define clearBit(register,bit) (register &= ~(1<<bit))
 #define checkBit(register,bit) ((register&(1<<bit))>>bit)
