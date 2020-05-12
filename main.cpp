@@ -64,7 +64,7 @@ static void onMouse( int event, int x, int y, int, void* )
 {
 	switch( event )
 	{
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			pickColor(globalFrame,x,y,AVERAGE,pickedColor);
 
 			xTarget.centerColor[0] = pickedColor[0];
@@ -73,7 +73,7 @@ static void onMouse( int event, int x, int y, int, void* )
 
 			update_classMask(&xTarget);
 			break;
-		case CV_EVENT_RBUTTONDOWN:
+		case EVENT_RBUTTONDOWN:
 			pickColor(globalFrame,x,y,AVERAGE,pickedColor);
 
 			qTarget.centerColor[0] = pickedColor[0];
@@ -82,9 +82,9 @@ static void onMouse( int event, int x, int y, int, void* )
 
 			update_classMask(&qTarget);
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			break;
-		case CV_EVENT_RBUTTONUP:
+		case EVENT_RBUTTONUP:
 			break;			
 	}
 
@@ -114,9 +114,16 @@ void on_trackbar( int, void* )
 /****************************************************************************/
 int main( int argc, const char** argv )
 {
-	/* Various frame definitions */
-	VideoCapture cap;
-	Mat frame = Mat::ones(480,640,CV_8UC3);
+
+	if ( argc != 2)
+	{
+		printf(" USAGE: to use first connected camera to your system give 0 as a parameter \n or you can give direct ip adress of video stream \n <rtsp://140.114.188.219/axis-media/media.amp>\n");
+		return -1;
+
+	}
+	/* Various frame definitions "http://192.168.1.100:8081/?action=stream" */
+	VideoCapture cap(argv[1],0);
+	Mat frame = Mat::ones(511,511,CV_8UC3);
 	Mat myColor = Mat::ones(32,32,CV_8UC3);
 	Mat frame_hsv = Mat::ones(480,640,CV_8UC3);
 	Mat	myOutput = Mat::ones(480/DOWNSAMPLE,640/DOWNSAMPLE,CV_8UC3);
@@ -140,7 +147,7 @@ int main( int argc, const char** argv )
 	xTarget.colorTolerance[2] = tolerance_3 / 200.0;
 
 	/* Open the first available camera */
-	cap.open(0);
+	//cap.open(0);
 
 	if(!cap.isOpened())	
 		cout << "Camera init. problem!*\n";
@@ -164,7 +171,7 @@ int main( int argc, const char** argv )
 			break;
 
 		/* Convert the camera frame to YUV color space */
-		cvtColor(frame,frame_hsv,CV_RGB2YCrCb,3);
+		cvtColor(frame,frame_hsv,COLOR_RGB2YCrCb,3);
 
 		/* Downsize the image according to the DOWNSAMPLE definition */
  		resize(frame_hsv,raw_input,raw_input.size(),0,0,INTER_AREA);
@@ -220,11 +227,11 @@ int main( int argc, const char** argv )
 		}
 
 		/* Convert selected YUV color back to RGB */
-		cvtColor(myColor,myColor,CV_YCrCb2RGB,3);
+		cvtColor(myColor,myColor,COLOR_YCrCb2RGB,3);
 		imshow("selected_color",myColor);
 
 		/* Convert image back to RGB */
-		cvtColor(myOutput,myOutput_rgb,CV_YCrCb2RGB,3);
+		cvtColor(myOutput,myOutput_rgb,COLOR_YCrCb2RGB,3);
 
 		/* Toggle between overlayered RGB image and binary images */
 		if(state == 0)
